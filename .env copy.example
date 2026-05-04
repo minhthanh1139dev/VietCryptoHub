@@ -1,0 +1,16 @@
+NODE_ENV=development
+PORT=3000
+
+MONGODB_URI=mongodb://localhost:27017/base-backend
+MONGODB_DB_NAME=base-backend
+
+JWT_SECRET=replace-with-very-strong-secret
+JWT_EXPIRES_IN=1d
+JWT_REFRESH_SECRET=replace-with-very-strong-refresh-secret
+JWT_REFRESH_EXPIRES_IN=7d
+
+APP_KEY=your_app_key
+GEMINI_API_KEY=your_gemini_api_key
+
+TELEGRAM_BOT_TOKEN=TELEGRAM_BOT_TOKEN
+TELEGRAM_CHANNEL_ID=-TELEGRAM_CHANNEL_ID

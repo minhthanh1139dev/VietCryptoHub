@@ -1,0 +1,48 @@
+services:
+  api:
+    build:
+      context: .
+      dockerfile: src/bin/api/Dockerfile
+    container_name: crypto-news-api
+    restart: always
+    ports:
+      - "${PORT:-3000}:3000"
+    env_file:
+      - .env
+    volumes:
+      - ./uploads:/app/uploads
+    networks:
+      - crypto-network
+
+  scheduler:
+    build:
+      context: .
+      dockerfile: src/bin/schedular/Dockerfile
+    container_name: crypto-news-scheduler
+    restart: always
+    env_file:
+      - .env
+    depends_on:
+      - api
+    networks:
+      - crypto-network
+
+  nginx:
+    image: nginx:alpine
+    container_name: crypto-news-nginx
+    restart: always
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./docker/nginx/conf.d:/etc/nginx/conf.d:ro
+      - ./docker/nginx/certbot/conf:/etc/letsencrypt:ro
+      - ./docker/nginx/certbot/www:/var/www/certbot:ro
+    depends_on:
+      - api
+    networks:
+      - crypto-network
+
+networks:
+  crypto-network:
+    driver: bridge
